@@ -52,7 +52,7 @@ router.get('/', restrict, function(req, res){
 router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
-router.get('/delete/:key', restrict, function(req, res){
+router.get('/delete/:key', restrict, async function(req, res){
   const key = req.params.key;
 
   if (!(await storage.exists(key))) {
