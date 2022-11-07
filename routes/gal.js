@@ -4,8 +4,8 @@ var app = express();
 var path = require('path');
 var hash = require('pbkdf2-password')()
 var session = require('express-session');
-
-
+var Storage = require('../lib/storage');
+const storage = new Storage();
 var users = {
   ws: { name: 'ws' }
 };
@@ -29,7 +29,7 @@ function authenticate(name, pass, fn) {
   });
 }
 function restrict(req, res, next) {
-  if (req.session.user) {
+  if (req.cookies.ciss) {
     next();
   } else {
     req.session.error = 'Access denied!';
@@ -52,8 +52,12 @@ router.get('/', restrict, function(req, res){
 router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
-
+router.get('/tes', async function(req, res){
+  const stream = storage.getStream('prof.png');
+  return stream.pipe(res);
+})
 router.get('/logout', function(req, res){
+    res.clearCookie('ciss');
     req.session.destroy(function(){
     res.redirect('/gal/login');
   });
@@ -66,7 +70,7 @@ router.post('/login', function (req, res, next) {
     if (err) return next(err)
     if (user) {
       req.session.regenerate(function(){
-        req.session.user = user;
+        res.cookie('ciss', user, { maxAge: 86400000 })
         req.session.success = 'Authenticated as ' + user.name
           + ' click to <a href="/gal/logout">logout</a>. '
           + ' You may now access <a href="/gal">/gal</a>.';

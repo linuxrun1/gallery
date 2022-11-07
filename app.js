@@ -12,10 +12,12 @@ var port = 3000
 var app = express();
 
 app.use(session({
-  resave: true, // don't save session if unmodified
+  resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
   secret: 'kamu nanya'
 }));
+app.use(cookieParser('kamu nanya'))
+
 
 app.use(function(req, res, next){
   var err = req.session.error;
@@ -35,7 +37,6 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
