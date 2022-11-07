@@ -12,7 +12,7 @@ var port = 3000
 var app = express();
 
 app.use(session({
-  resave: false, // don't save session if unmodified
+  resave: true, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
   secret: 'kamu nanya'
 }));
