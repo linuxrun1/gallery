@@ -52,8 +52,8 @@ router.get('/', restrict, function(req, res){
 router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
-router.get('/tes', async function(req, res){
-  const stream = storage.getStream('prof.png');
+router.get('/img/:name', restrict, async function(req, res){
+  const stream = storage.getStream(req.params.name);
   return stream.pipe(res);
 })
 router.get('/logout', function(req, res){
