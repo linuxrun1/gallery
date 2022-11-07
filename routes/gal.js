@@ -52,6 +52,22 @@ router.get('/', restrict, function(req, res){
 router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
+router.get('/delete/:key', restrict, function(req, res){
+  const key = req.params.key;
+
+  if (!(await storage.exists(key))) {
+    return res.status(404).json({
+      ok: false,
+      error: 'File does not exist.'
+    });
+  }
+
+  const contents = await storage.get(key);
+  return res.json({
+    ok: true,
+    contents
+  });
+});
 router.get('/img/:name', restrict, async function(req, res){
   if (!(await storage.exists(req.params.name))) {
     return res.status(404).json({
