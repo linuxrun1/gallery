@@ -54,6 +54,7 @@ router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
 router.post('/upload', restrict, async function(req, res){
+  const contents = req.body;
   try {
     let key;
 
