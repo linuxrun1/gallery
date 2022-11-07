@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var app = express();
 var path = require('path');
+var cuid = require('cuid');
 var hash = require('pbkdf2-password')()
 var session = require('express-session');
 var Storage = require('../lib/storage');
@@ -52,6 +53,21 @@ router.get('/', restrict, function(req, res){
 router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
+router.post('/upload', restrict, async function(req, res){
+  try {
+    let key;
+
+    do {
+      key = cuid.slug();
+    } while (await storage.exists(key));
+
+    await storage.create({ key, contents });
+    return res.json({ ok: true, key });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false });
+  }
+})
 router.get('/delete/:key', restrict, async function(req, res){
   const key = req.params.key;
 
