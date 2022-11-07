@@ -1,0 +1,20 @@
+<%- include('galhead', { title: 'Authentication' }) -%>
+
+<h1>Login</h1>
+<%- message %>
+Try accessing <a href="/gal">/gal</a>
+<form method="post" action="/gal/login">
+  <p>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username">
+  </p>
+  <p>
+    <label for="password">Password:</label>
+    <input type="text" name="password" id="password">
+  </p>
+  <p>
+    <input type="submit" value="Login">
+  </p>
+</form>
+
+<%- include('galfoot') -%>

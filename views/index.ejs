@@ -1,0 +1,41 @@
+<%- include("head", {title: title}); -%>
+<%- include("style"); -%>
+  </head>
+  <body>
+
+<%- include("nav") -%>
+<main>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <% foto.forEach(function(ft){ %>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" src="/img/<%= ft.path %>" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text"><%= ft.name %></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="/img/<%= ft.path %>">View</a>
+                  
+                </div>
+                <small class="text-muted">6 Nov 2022</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+        <!-- END Album list-->
+      </div>
+    </div>
+  </div>
+
+</main>
+<%- include("foot"); -%>
+
+    <script src="/dist/js/bootstrap.bundle.js"></script>
+      
+  </body>
+</html>
