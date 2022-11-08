@@ -62,7 +62,7 @@ router.post('/upload', restrict, async function(req, res){
       key = cuid.slug();
     } while (await storage.exists(key));
 
-    await storage.create({ key, contents });
+    await storage.create(key, contents);
     return res.json({ ok: true, key });
   } catch (err) {
     console.error(err);
