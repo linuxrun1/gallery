@@ -63,7 +63,7 @@ router.post('/upload', restrict, async function(req, res){
     } while (await storage.exists(key));
 
     await storage.create(key, contents);
-    return res.json({ ok: true, key });
+    return res.json({ ok: true, key, contents });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ ok: false, error: err });
