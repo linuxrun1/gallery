@@ -54,7 +54,7 @@ router.get('/del/:id',restrict,function(req, res, next) {
   res.render('del', {id: req.params.id});
 });
 router.post('/upload', restrict, async function(req, res){
-  const contents = req.body;
+  const contents = req.files.file.data;
   try {
     let key;
 
@@ -63,10 +63,10 @@ router.post('/upload', restrict, async function(req, res){
     } while (await storage.exists(key));
 
     await storage.create(key, contents);
-    return res.json({ ok: true, key, contents });
+    return res.json({ ok: true, key });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ ok: false, error: err });
+    return res.status(500).json({ ok: false, error: err, content: contents });
   }
 })
 router.get('/delete/:key', restrict, async function(req, res){
