@@ -5,12 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hash = require('pbkdf2-password')()
 var session = require('express-session');
+const upload = require("express-fileupload");
 
 var indexRouter = require('./routes/index');
 var galRouter = require('./routes/gal');
 var port = 3000
 var app = express();
-
+app.use(upload());
 app.use(session({
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
